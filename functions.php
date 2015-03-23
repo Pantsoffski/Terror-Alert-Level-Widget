@@ -1,6 +1,6 @@
 <?php
 
-function TerrorAlertFetch() {
+function TerrorAlertFetch() { //fetch bbc world news rss
 	$ch = curl_init();
 	curl_setopt($ch,CURLOPT_URL,"http://feeds.bbci.co.uk/news/world/rss.xml");
 		curl_setopt($ch,CURLOPT_RETURNTRANSFER,1); 
@@ -12,13 +12,14 @@ function TerrorAlertFetch() {
 	$data = strip_tags($data); //wywala cały html
 	$data = trim(preg_replace('/\s+/', ' ', $data)); //usuwa wszystkie, niepotrzebne przerwy, entery itp.
 
-	function MatchTextAndCount($data){
+	function MatchTextAndCount($data){ //matching and counting tags
  		$matches = array();
-    	$pattern = "/attack|attacker|terror|terrorist/";
+    	$pattern = "/attac+ker|attack|terror+ist|terror|explosion/i";
     	preg_match_all($pattern, $data, $matches);
-    	var_dump($matches);
+    	$result = count($matches, COUNT_RECURSIVE);
+    	$result = $result-1;
+    	return $result; //return tag number value
  	}
-
 	return MatchTextAndCount($data);
 }
 

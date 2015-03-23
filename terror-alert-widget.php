@@ -2,7 +2,7 @@
 /*
 Plugin Name: Terror Alert Level
 Plugin URI: http://smartfan.pl/
-Description: Widget that shows terror alert level based on news agencies.
+Description: Widget that shows terror alert level based on news from agencies.
 Author: Piotr Pesta
 Version: 1.0.0
 Author URI: http://smartfan.pl/
@@ -54,11 +54,23 @@ $title = apply_filters('widget_title', $instance['title']);
 echo $before_widget;
 
 // Check if title is set
-if ( $title ) {
+if($title) {
 echo $before_title . $title . $after_title;
 }
 
-TerrorAlertFetch();
+$result = TerrorAlertFetch();
+
+if($result<=2){
+	echo '<div id="level1">'.'Low'.'</div>';
+}else if($result<5){
+	echo '<div id="level2">'.'Moderate'.'</div>';
+}else if($result<8){
+	echo '<div id="level3">'.'Substantial'.'</div>';
+}else if($result<11){
+	echo '<div id="level4">'.'Severe'.'</div>';
+}else if($result>=11){
+	echo '<div id="level5">'.'Critical'.'</div>';
+}
 
 echo $after_widget;
 }
