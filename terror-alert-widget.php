@@ -24,6 +24,11 @@ function update($new_instance, $old_instance) {
 $instance = $old_instance;
 // Pola
 $instance['title'] = strip_tags($new_instance['title']);
+$instance['level1'] = strip_tags($new_instance['level1']);
+$instance['level2'] = strip_tags($new_instance['level2']);
+$instance['level3'] = strip_tags($new_instance['level3']);
+$instance['level4'] = strip_tags($new_instance['level4']);
+$instance['level5'] = strip_tags($new_instance['level5']);
 return $instance;
 }
 
@@ -32,13 +37,38 @@ return $instance;
 function form($instance) {
 
 // nadawanie i łączenie defaultowych wartości
-	$defaults = array('title' => 'Terror Alert Level');
+	$defaults = array('level1' => 'Low', 'level2' => 'Moderate', 'level3' => 'Substantial', 'level4' => 'Severe', 'level5' => 'Critical', 'title' => 'Terror Alert Level');
 	$instance = wp_parse_args( (array) $instance, $defaults );
 ?>
 
 <p>
 	<label for="<?php echo $this->get_field_id( 'title' ); ?>">Title:</label>
 	<input id="<?php echo $this->get_field_id( 'title' ); ?>" name="<?php echo $this->get_field_name( 'title' ); ?>" value="<?php echo $instance['title']; ?>" style="width:100%;" />
+</p>
+
+<p>
+	<label for="<?php echo $this->get_field_id( 'level1' ); ?>">Level 1 label:</label>
+	<input id="<?php echo $this->get_field_id( 'level1' ); ?>" name="<?php echo $this->get_field_name( 'level1' ); ?>" value="<?php echo $instance['level1']; ?>" style="width:100%;" />
+</p>
+
+<p>
+	<label for="<?php echo $this->get_field_id( 'level2' ); ?>">Level 2 label:</label>
+	<input id="<?php echo $this->get_field_id( 'level2' ); ?>" name="<?php echo $this->get_field_name( 'level2' ); ?>" value="<?php echo $instance['level2']; ?>" style="width:100%;" />
+</p>
+
+<p>
+	<label for="<?php echo $this->get_field_id( 'level3' ); ?>">Level 3 label:</label>
+	<input id="<?php echo $this->get_field_id( 'level3' ); ?>" name="<?php echo $this->get_field_name( 'level3' ); ?>" value="<?php echo $instance['level3']; ?>" style="width:100%;" />
+</p>
+
+<p>
+	<label for="<?php echo $this->get_field_id( 'level4' ); ?>">Level 4 label:</label>
+	<input id="<?php echo $this->get_field_id( 'level4' ); ?>" name="<?php echo $this->get_field_name( 'level4' ); ?>" value="<?php echo $instance['level4']; ?>" style="width:100%;" />
+</p>
+
+<p>
+	<label for="<?php echo $this->get_field_id( 'level5' ); ?>">Level 5 label:</label>
+	<input id="<?php echo $this->get_field_id( 'level5' ); ?>" name="<?php echo $this->get_field_name( 'level5' ); ?>" value="<?php echo $instance['level5']; ?>" style="width:100%;" />
 </p>
 
 <?php
@@ -51,6 +81,11 @@ extract( $args );
 
 // these are the widget options
 $title = apply_filters('widget_title', $instance['title']);
+$level1 = $instance['level1'];
+$level2 = $instance['level2'];
+$level3 = $instance['level3'];
+$level4 = $instance['level4'];
+$level5 = $instance['level5'];
 echo $before_widget;
 
 // Check if title is set
@@ -60,16 +95,16 @@ echo $before_title . $title . $after_title;
 
 $result = TerrorAlertFetch();
 
-if($result<=2){
-	echo '<div id="level1">'.'Low'.'</div>';
-}else if($result<5){
-	echo '<div id="level2">'.'Moderate'.'</div>';
-}else if($result<8){
-	echo '<div id="level3">'.'Substantial'.'</div>';
-}else if($result<11){
-	echo '<div id="level4">'.'Severe'.'</div>';
-}else if($result>=11){
-	echo '<div id="level5">'.'Critical'.'</div>';
+if($result<=3){
+	echo '<div id="level1">'.$level1.'</div>';
+}else if($result<4){
+	echo '<div id="level2">'.$level2.'</div>';
+}else if($result<7){
+	echo '<div id="level3">'.$level3.'</div>';
+}else if($result<10){
+	echo '<div id="level4">'.$level4.'</div>';
+}else if($result>=10){
+	echo '<div id="level5">'.$level5.'</div>';
 }
 
 echo $after_widget;
